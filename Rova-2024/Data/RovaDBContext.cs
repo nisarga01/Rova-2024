@@ -8,7 +8,7 @@ namespace Rova_2024.Data
     {
         public RovaDBContext(DbContextOptions<RovaDBContext> options) : base(options) { }
 
-        public DbSet<SellersOnboarding> SellerOnboarding { get; set; } = default!;
+        public DbSet<SellersCommercialDetails> SellerCommercialDetails { get; set; } = default!;
         public DbSet<Sellers> Sellers { get; set; } = default;
     }
 }
