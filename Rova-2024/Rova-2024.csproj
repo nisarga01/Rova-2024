@@ -8,6 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="IRepository\**" />
+    <Compile Remove="IServices\**" />
+    <Content Remove="IRepository\**" />
+    <Content Remove="IServices\**" />
+    <EmbeddedResource Remove="IRepository\**" />
+    <EmbeddedResource Remove="IServices\**" />
+    <None Remove="IRepository\**" />
+    <None Remove="IServices\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.22" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.22" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.22">
@@ -16,11 +27,6 @@
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.22" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="IServices\" />
-    <Folder Include="IRepository\" />
   </ItemGroup>
 
 </Project>
