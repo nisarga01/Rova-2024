@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Rova_2024.Models
 {
-    public class Sellers
+    public class SellersOnboarding
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
