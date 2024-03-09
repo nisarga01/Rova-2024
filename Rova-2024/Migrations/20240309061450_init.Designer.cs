@@ -12,7 +12,7 @@ using Rova_2024.Data;
 namespace Rova_2024.Migrations
 {
     [DbContext(typeof(RovaDBContext))]
-    [Migration("20240308090158_init")]
+    [Migration("20240309061450_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
