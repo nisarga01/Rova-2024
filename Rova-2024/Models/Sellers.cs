@@ -7,10 +7,10 @@ namespace Rova_2024.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public int SellerId { get; set; }
-        public string Name { get; set; }
-        public string PhoneNumber { get; set; }
-        public int OTP { get; set; }
-        public bool IsOTPVerified { get; set; } = false;
+        public int Seller_Id { get; set; }
+        public string? Name { get; set; }
+        public string? PhoneNumber { get; set; }
+        public int? OTP { get; set; }
+        public bool? IsOTPVerified { get; set; } = false;
     }
 }
