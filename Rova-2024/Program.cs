@@ -1,38 +1,63 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Rova_2024.Data;
+using Rova_2024.IRepository;
+using Rova_2024.IServices;
+using Rova_2024.Repository;
+using Rova_2024.Services;
 
-public class Program
+namespace Rova_2024
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
-
-        builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-        builder.Services.AddDbContext<RovaDBContext>(options =>
+        public static void Main(string[] args)
         {
-            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-            options.EnableSensitiveDataLogging();
-        });
+            var builder = WebApplication.CreateBuilder(args);
 
+            // Add services to the container.
 
-        var app = builder.Build();
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<ISellerCommercialDetailsServices, SellerCommercialDetailsServices>();
+            builder.Services.AddScoped<ISellerCommercialDetailsRepository, SellerCommercialDetailsRepository>();
+            builder.Services.AddDbContext<RovaDBContext>(options =>
+            {
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.EnableSensitiveDataLogging();
+            });
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CORSPolicy",
+                    builder => builder
+                        .WithOrigins("http://example.com", "http://localhost:5259")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+                        
 
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
+            });
+            var app = builder.Build();
+            app.UseCors("CORSPolicy");
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
             app.UseSwagger();
             app.UseSwaggerUI();
+            //app.UseHttpsRedirection();
+
+            app.UseAuthorization();
+
+            app.MapControllers();
+
+            app.Run();
         }
-
-        app.UseAuthorization();
-
-        app.MapControllers();
-
-        app.Run();
     }
+    //app.UseSwaggerUI(c =>
+    //{
+    //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rova-2024");
+    //});
 }
