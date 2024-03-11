@@ -20,8 +20,19 @@ namespace Rova_2024.Services
         public async Task<ServiceResponse<SellerCommercialDetailsResponseDTO>> addSellerCommercialDetailsAsync(SellerCommercialDetailsRequestDTO sellerCommercialDetailsRequestDTO)
         {
             string documents = HandleFileUpload(sellerCommercialDetailsRequestDTO.PAN_Documnet);
+            var seller = await sellerCommercialDetailsRepository.GetSellerIdByPhoneAsync(sellerCommercialDetailsRequestDTO.Phone);
+            if (seller == null)
+            {
+                // Handle case where seller is not found
+                return new ServiceResponse<SellerCommercialDetailsResponseDTO>()
+                {
+                    Success = false,
+                    ErrorMessage = "Seller not found"
+                };
+            }
             var sellerCommercialDetails = new SellerCommercialDetails
             {
+                Seller = seller,
                 GST_Number = sellerCommercialDetailsRequestDTO.GST_Number,
                 PAN_Number = sellerCommercialDetailsRequestDTO.PAN_Number,
                 PAN_Document = documents,
@@ -30,15 +41,17 @@ namespace Rova_2024.Services
                 Pincode = sellerCommercialDetailsRequestDTO.Pincode,
                 State = sellerCommercialDetailsRequestDTO.State,
                 Area = sellerCommercialDetailsRequestDTO.Area,
+                //Seller = seller
             };
             var Result = await sellerCommercialDetailsRepository.addSellerCommercialDetailsAsync(sellerCommercialDetails);
 
+            
             var Response = new ServiceResponse<SellerCommercialDetailsResponseDTO>()
             {
                 Data = Result != null && Result.Success && Result.Data != null ? new SellerCommercialDetailsResponseDTO()
                 {
                     Id = Result.Data.Id,
-                    //Seller_Id = Result.Data.Seller_Id,
+                    Phone = Result.Data.Seller.Phone,
                     GST_Number = Result.Data.GST_Number,
                     PAN_Number= Result.Data.PAN_Number,
                     PAN_Documnet = Result.Data.PAN_Document,

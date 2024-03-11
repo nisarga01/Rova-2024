@@ -9,14 +9,23 @@ namespace Rova_2024.Data
         public RovaDBContext(DbContextOptions<RovaDBContext> options) : base(options) { }
 
         public DbSet<SellerCommercialDetails> SellerCommercialDetails { get; set; } = default!;
+        public DbSet<Sellers>Sellers { get; set; } = default!;
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<SellerCommercialDetails>()
-        //        .HasOne(s => s.Sellers)               // Navigation property
-        //        .WithOne()                          // One-to-one relationship
-        //        .HasForeignKey<SellerCommercialDetails>(s => s.Seller_Id);  // Foreign key property
-        //}
+       
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SellerCommercialDetails>()
+                .HasOne(scd => scd.Seller)
+                .WithOne(s => s.CommercialDetails)
+                .HasForeignKey<SellerCommercialDetails>(scd => scd.Id);
+        }
 
     }
 }
+//protected override void OnModelCreating(ModelBuilder modelBuilder)
+//{
+//    modelBuilder.Entity<SellerCommercialDetails>()
+//        .HasOne(s => s.Sellers)               // Navigation property
+//        .WithOne()                          // One-to-one relationship
+//        .HasForeignKey<SellerCommercialDetails>(s => s.Seller_Id);  // Foreign key property
+//}

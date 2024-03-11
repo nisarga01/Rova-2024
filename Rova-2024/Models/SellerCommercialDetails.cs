@@ -8,10 +8,6 @@ namespace Rova_2024.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
-
-        //[ForeignKey("Sellers")]
-        //public int Seller_Id { get; set; }//Foreign key
-        //public Sellers Sellers { get; set; }//navigation
         public int GST_Number { get; set; }
         public int PAN_Number { get; set; }
         public string? PAN_Document { get; set; }
@@ -20,6 +16,7 @@ namespace Rova_2024.Models
         public int Pincode { get; set; }
         public string State { get; set; }
         public string Area { get; set; }
+        public Sellers Seller { get; set; } // Navigation property
     }
 }
 

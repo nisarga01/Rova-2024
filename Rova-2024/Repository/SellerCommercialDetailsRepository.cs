@@ -1,4 +1,5 @@
-﻿using Rova_2024.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Rova_2024.Data;
 using Rova_2024.IRepository;
 using Rova_2024.Models;
 using Rova_2024.ServiceResponse;
@@ -12,6 +13,13 @@ namespace Rova_2024.Repository
         {
             this.dbContext = dbContext;
         }
+        public async Task<Sellers> GetSellerIdByPhoneAsync(string phone)
+        {
+            var seller = await dbContext.Sellers
+                .FirstOrDefaultAsync(s => s.Phone == phone);
+
+            return seller;
+        }
         public async Task<ServiceResponse<SellerCommercialDetails>> addSellerCommercialDetailsAsync(SellerCommercialDetails sellersCommercialDetails)
         {
             try
@@ -20,10 +28,10 @@ namespace Rova_2024.Repository
                 await dbContext.SaveChangesAsync();
                 return new ServiceResponse<SellerCommercialDetails>()
                 {
-                    Data=sellersCommercialDetails,
+                    Data = sellersCommercialDetails,
                     Success = true,
                     ResultMessage = "Sellers Commercial Details Added Successfully"
-                    
+
                 };
             }
             catch (Exception ex)

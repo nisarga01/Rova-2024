@@ -3,6 +3,8 @@
     public class SellerCommercialDetailsRequestDTO
     {
         public int GST_Number { get; set; }
+        //public int SellerId { get; set; }
+        public string Phone { get; set; }
         public int PAN_Number { get; set; }
         public IFormFile? PAN_Documnet { get; set; }
         public string StoreName { get; set; }

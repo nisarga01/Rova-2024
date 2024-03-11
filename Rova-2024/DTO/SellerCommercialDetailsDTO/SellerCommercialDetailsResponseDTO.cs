@@ -6,7 +6,7 @@ namespace Rova_2024.DTO.SellerCommercialDetailsDTO
     public class SellerCommercialDetailsResponseDTO
     {
         public int Id { get; set; }
-        //public int Seller_Id { get; set; }
+        public string Phone { get; set; }
         public int GST_Number { get; set; }
         public int PAN_Number { get; set; }
         public string? PAN_Documnet { get; set; }
